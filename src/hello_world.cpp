@@ -13,9 +13,6 @@
 #include "ros/ros.h"
 // constants
 constexpr double K = 1000.0;
-
-//Hello_World Change
-
 ////////////////////////////////////////////////////////////////////////////////
 int main(int argc,
          char* argv[])
