@@ -8,12 +8,7 @@
 
 //little comment
 //second little comment
-<<<<<<< HEAD
-//fourth
-=======
-//third
 
->>>>>>> 595eb1e80e43e9808b533b0d73d6218318ceebd9
 #include <sstream>
 
 void displayDeviceStatus(char ID);
