@@ -6,9 +6,6 @@
 #include <geometry_msgs/Vector3Stamped.h>
 #include <geometry_msgs/Vector3.h>
 
-//little comment
-//second little comment
-
 #include <sstream>
 
 void displayDeviceStatus(char ID);
