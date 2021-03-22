@@ -6,6 +6,8 @@
 #include <geometry_msgs/Vector3Stamped.h>
 #include <geometry_msgs/Vector3.h>
 
+//Change in Omega7.cpp
+
 #include <sstream>
 
 void displayDeviceStatus(char ID);
