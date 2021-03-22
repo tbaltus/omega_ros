@@ -22,7 +22,6 @@ int main(int argc, char **argv)
   double right_device_cartesian_velocity[3];
   
   // Init node
-  //look
   ros::init(argc, argv, "omega7");
   ros::NodeHandle n;
 
