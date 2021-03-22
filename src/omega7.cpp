@@ -26,7 +26,6 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
 
   // Declare publishers
-  //my change
   ros::Publisher cartesian_position_right_device_pub;
   cartesian_position_right_device_pub = n.advertise<geometry_msgs::Vector3Stamped>("/cartesian_position_right_device",1);
 
