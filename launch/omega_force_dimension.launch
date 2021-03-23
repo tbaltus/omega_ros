@@ -1,0 +1,5 @@
+<launch>
+
+<node pkg="omega_ros" type="omega7" name="omega7_node"/>
+
+</launch>
