@@ -11,29 +11,29 @@
 void displayDeviceStatus(char ID);
 void displayCartesianPosition(double *cartesian_position);
 void displayCartesianVelocity(double *cartesian_velocity);
-void rightDeviceForceCallback(const geometry_msgs::Vector3::ConstPtr &msg);
+void deviceForceCallback(const geometry_msgs::Vector3::ConstPtr &msg);
 
 int main(int argc, char **argv)
 {
   
   // Declare variables
-  double right_device_cartesian_position[3];
-  double right_device_cartesian_velocity[3];
+  double device_cartesian_position[3];
+  double device_cartesian_velocity[3];
   
   // Init node
   ros::init(argc, argv, "omega7");
   ros::NodeHandle n;
 
   // Declare publishers
-  ros::Publisher cartesian_position_right_device_pub;
-  cartesian_position_right_device_pub = n.advertise<geometry_msgs::Vector3Stamped>("/cartesian_position_right_device",1);
+  ros::Publisher cartesian_position_device_pub;
+  cartesian_position_device_pub = n.advertise<geometry_msgs::Vector3Stamped>("/EE_cartesian_position",1);
 
-  ros::Publisher cartesian_velocity_right_device_pub;
-  cartesian_velocity_right_device_pub = n.advertise<geometry_msgs::Vector3Stamped>("/cartesian_velocity_right_device",1);
+  ros::Publisher cartesian_velocity_device_pub;
+  cartesian_velocity_device_pub = n.advertise<geometry_msgs::Vector3Stamped>("/EE_cartesian_velocity_device",1);
 
   // Declare subscribers
-  ros::Subscriber cartesian_force_right_device_sub;
-  cartesian_force_right_device_sub = n.subscribe<geometry_msgs::Vector3>("/cartesian_force_right_device",1, rightDeviceForceCallback);
+  ros::Subscriber cartesian_force_device_sub;
+  cartesian_force_device_sub = n.subscribe<geometry_msgs::Vector3>("/EE_cartesian_force_device",1, deviceForceCallback);
 
   // open a connection to the device
   if (dhdOpen() < 0)
@@ -59,28 +59,28 @@ int main(int argc, char **argv)
   while (ros::ok())
   {
 
-    //Get right device cartesian positions and cartesian velocities
-    dhdGetPosition(&right_device_cartesian_position[0], &right_device_cartesian_position[1], &right_device_cartesian_position[2], dhdGetDeviceID());
-    dhdGetLinearVelocity(&right_device_cartesian_velocity[0], &right_device_cartesian_velocity[1], &right_device_cartesian_velocity[2], dhdGetDeviceID());
+    //Get device cartesian positions and cartesian velocities
+    dhdGetPosition(&device_cartesian_position[0], &device_cartesian_position[1], &device_cartesian_position[2], dhdGetDeviceID());
+    dhdGetLinearVelocity(&device_cartesian_velocity[0], &device_cartesian_velocity[1], &device_cartesian_velocity[2], dhdGetDeviceID());
 
     //Display cartesian positions and cartesian velocities
-    //displayCartesianPosition(&right_device_cartesian_position[0]);
-    //displayCartesianVelocity(&right_device_cartesian_velocity[0]);
+    //displayCartesianPosition(&device_cartesian_position[0]);
+    //displayCartesianVelocity(&device_cartesian_velocity[0]);
     
-    //Publishing right device cartesian positions and cartesian velocities
-    geometry_msgs::Vector3Stamped cart_pos_right_dev;
-    geometry_msgs::Vector3Stamped cart_vel_right_dev;
+    //Publishing device cartesian positions and cartesian velocities
+    geometry_msgs::Vector3Stamped cart_pos_dev;
+    geometry_msgs::Vector3Stamped cart_vel_dev;
 
-    cart_pos_right_dev.vector.x = right_device_cartesian_position[0];
-    cart_pos_right_dev.vector.y = right_device_cartesian_position[1];
-    cart_pos_right_dev.vector.z = right_device_cartesian_position[2];
+    cart_pos_dev.vector.x = device_cartesian_position[0];
+    cart_pos_dev.vector.y = device_cartesian_position[1];
+    cart_pos_dev.vector.z = device_cartesian_position[2];
 
-    cart_vel_right_dev.vector.x = right_device_cartesian_velocity[0];
-    cart_vel_right_dev.vector.y = right_device_cartesian_velocity[1];
-    cart_vel_right_dev.vector.z = right_device_cartesian_velocity[2];
+    cart_vel_dev.vector.x = device_cartesian_velocity[0];
+    cart_vel_dev.vector.y = device_cartesian_velocity[1];
+    cart_vel_dev.vector.z = device_cartesian_velocity[2];
 
-    cartesian_position_right_device_pub.publish(cart_pos_right_dev);
-    cartesian_velocity_right_device_pub.publish(cart_vel_right_dev);
+    cartesian_position_device_pub.publish(cart_pos_dev);
+    cartesian_velocity_device_pub.publish(cart_vel_dev);
 
     ros::spinOnce();
 
@@ -128,7 +128,7 @@ void displayCartesianVelocity(double *cartesian_velocity)
   ROS_INFO("vz = %f", cartesian_velocity[2]); 
 }
 
-void rightDeviceForceCallback(const geometry_msgs::Vector3::ConstPtr &msg)
+void deviceForceCallback(const geometry_msgs::Vector3::ConstPtr &msg)
 {
   dhdSetForce(msg->x, msg->y, msg->z);
 }
