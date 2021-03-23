@@ -46,12 +46,10 @@ int main(int argc, char **argv)
   dhdSetBrakes(DHD_OFF);
   dhdEnableForce(DHD_ON);
 
-  // Set zero force for the beginning
-  //dhdSetForce(0,0,0);
-
   // Display Status
   displayDeviceStatus(dhdGetDeviceID());
 
+  //Set zero force
   dhdSetForce(0, 0, 0);
 
   ros::Rate loop_rate(200);
@@ -94,6 +92,7 @@ void displayDeviceStatus(char ID)
 {
     int status[DHD_MAX_STATUS];
     dhdGetStatus(status, ID);
+    ROS_INFO("========================");
     ROS_INFO("Status");
     ROS_INFO("%d : DHD_STATUS_POWER", status[DHD_STATUS_POWER]);
     ROS_INFO("%d : DHD_STATUS_CONNECTED", status[DHD_STATUS_CONNECTED]);
@@ -112,6 +111,8 @@ void displayDeviceStatus(char ID)
     ROS_INFO("%d : DHD_STATUS_FORCEOFFCAUSE", status[DHD_STATUS_FORCEOFFCAUSE]);
     ROS_INFO("%d : DHD_STATUS_LOCKS", status[DHD_STATUS_LOCKS]);
     ROS_INFO("%d : DHD_STATUS_AXISCHECKED", status[DHD_STATUS_AXISCHECKED]);
+    ROS_INFO("========================");
+
 }
 
 void displayCartesianPosition(double *cartesian_position)
