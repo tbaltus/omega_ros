@@ -52,12 +52,12 @@ rosrun omega_ros omega7
 Your can apply cartesian forces to the end-effector through the topic
 
 ```
-/EE_cartesian_force_device
+/EE_cartesian_force
 ```
 
 and retrieve positions and velocities of the end-effector
 
 ```
 /EE_cartesian_position
-/EE_cartesian_velocity_device
+/EE_cartesian_velocity
 ```
