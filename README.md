@@ -40,9 +40,5 @@ or run it
 
 ```
 roscore
-```
-In a new terminal
-
-```
 rosrun omega_ros omega7
 ```
