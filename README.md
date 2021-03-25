@@ -26,7 +26,7 @@ Clone the following package in the src folder of your catkin workspace
 git clone git@github.com:tbaltus/omega_ros.git
 ```
 
-# Run or launch
+# Running or launching
 
 Run `catkin_make` first
 
@@ -41,4 +41,19 @@ or run it
 ```
 roscore
 rosrun omega_ros omega7
+```
+
+# Topics of interest
+
+Your can apply cartesian forces to the end-effector through the topic
+
+```
+/EE_cartesian_force_device
+```
+
+and retrieve positions and velocities
+
+```
+/EE_cartesian_position
+/EE_cartesian_velocity_device
 ```
