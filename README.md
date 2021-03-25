@@ -51,7 +51,7 @@ Your can apply cartesian forces to the end-effector through the topic
 /EE_cartesian_force_device
 ```
 
-and retrieve positions and velocities
+and retrieve positions and velocities of the end-effector
 
 ```
 /EE_cartesian_position
