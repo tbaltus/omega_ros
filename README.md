@@ -1,7 +1,11 @@
 # omega_ros
 The following package offers a ROS interface with the haptic device omega 7 from force dimension. This allows easy integration of the device within a ROS ecosystem.
 
-1st download the official library from force dimension https://www.forcedimension.com/software/sdk#:~:text=The%20Force%20Dimension%20SDK%20is,Haptic%20SDK%20and%20Robotic%20SDK. 
+1st download the official library from force dimension 
+
+```
+https://www.forcedimension.com/software/sdk#:~:text=The%20Force%20Dimension%20SDK%20is,Haptic%20SDK%20and%20Robotic%20SDK. 
+```
 
 You will find documentation about available functions from 
 

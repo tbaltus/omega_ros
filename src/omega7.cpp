@@ -28,11 +28,11 @@ int main(int argc, char **argv)
   cartesian_position_device_pub = n.advertise<geometry_msgs::Vector3Stamped>("/EE_cartesian_position",1);
 
   ros::Publisher cartesian_velocity_device_pub;
-  cartesian_velocity_device_pub = n.advertise<geometry_msgs::Vector3Stamped>("/EE_cartesian_velocity_device",1);
+  cartesian_velocity_device_pub = n.advertise<geometry_msgs::Vector3Stamped>("/EE_cartesian_velocity",1);
 
   // Declare subscribers
   ros::Subscriber cartesian_force_device_sub;
-  cartesian_force_device_sub = n.subscribe<geometry_msgs::Vector3>("/EE_cartesian_force_device",1, deviceForceCallback);
+  cartesian_force_device_sub = n.subscribe<geometry_msgs::Vector3>("/EE_cartesian_force",1, deviceForceCallback);
 
   // open a connection to the device
   if (dhdOpen() < 0)
