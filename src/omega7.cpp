@@ -15,7 +15,6 @@ void deviceForceCallback(const geometry_msgs::Vector3::ConstPtr &msg);
 
 int main(int argc, char **argv)
 {
-  
   // Declare variables
   double device_cartesian_position[3];
   double device_cartesian_velocity[3];
@@ -42,6 +41,8 @@ int main(int argc, char **argv)
     return -1;
   }
 
+  //dhdWaitForReset(10000); 
+
   // Disable brakes and set device in force mode
   dhdSetBrakes(DHD_OFF);
   dhdEnableForce(DHD_ON);
@@ -56,7 +57,6 @@ int main(int argc, char **argv)
 
   while (ros::ok())
   {
-
     //Get device cartesian positions and cartesian velocities
     dhdGetPosition(&device_cartesian_position[0], &device_cartesian_position[1], &device_cartesian_position[2], dhdGetDeviceID());
     dhdGetLinearVelocity(&device_cartesian_velocity[0], &device_cartesian_velocity[1], &device_cartesian_velocity[2], dhdGetDeviceID());
@@ -84,7 +84,6 @@ int main(int argc, char **argv)
 
     loop_rate.sleep();
   }
-
   return 0;
 }
 
@@ -112,7 +111,6 @@ void displayDeviceStatus(char ID)
     ROS_INFO("%d : DHD_STATUS_LOCKS", status[DHD_STATUS_LOCKS]);
     ROS_INFO("%d : DHD_STATUS_AXISCHECKED", status[DHD_STATUS_AXISCHECKED]);
     ROS_INFO("========================");
-
 }
 
 void displayCartesianPosition(double *cartesian_position)
