@@ -30,7 +30,7 @@ Clone the following package in the src folder of your catkin workspace
 git clone https://github.com/tbaltus/omega_ros
 ```
 
-# Running or launching
+# Running/Launching
 
 Run `catkin_make` first
 

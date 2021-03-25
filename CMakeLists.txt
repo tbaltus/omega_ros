@@ -62,3 +62,25 @@ target_link_libraries(hello_world
   ${DRDLIB}
   ${USB1LIB}
   ${catkin_LIBRARIES})
+
+add_executable(viscosity_omega7 
+  src/viscosity_omega7.cpp)
+
+add_dependencies(viscosity_omega7 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+target_link_libraries(viscosity_omega7
+  ${DHDLIB}
+  ${DRDLIB}
+  ${USB1LIB}
+  ${catkin_LIBRARIES})
+
+add_executable(PID_at_pose_omega7 
+  src/PID_at_pose_omega7.cpp)
+
+add_dependencies(PID_at_pose_omega7 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+target_link_libraries(PID_at_pose_omega7
+  ${DHDLIB}
+  ${DRDLIB}
+  ${USB1LIB}
+  ${catkin_LIBRARIES})

@@ -18,6 +18,7 @@ int main(int argc, char **argv)
   // Declare variables
   double device_cartesian_position[3];
   double device_cartesian_velocity[3];
+  double  jacobian[3][3];
   
   // Init node
   ros::init(argc, argv, "omega7");
@@ -60,6 +61,10 @@ int main(int argc, char **argv)
     //Get device cartesian positions and cartesian velocities
     dhdGetPosition(&device_cartesian_position[0], &device_cartesian_position[1], &device_cartesian_position[2], dhdGetDeviceID());
     dhdGetLinearVelocity(&device_cartesian_velocity[0], &device_cartesian_velocity[1], &device_cartesian_velocity[2], dhdGetDeviceID());
+
+    //Get jacobian
+    dhdGetDeltaJacobian(jacobian);
+    ROS_INFO("%f", jacobian[0][0]);
 
     //Display cartesian positions and cartesian velocities
     //displayCartesianPosition(&device_cartesian_position[0]);
