@@ -4,8 +4,11 @@ The following package offers a ROS interface with the haptic device omega 7 from
 1st download the official library from force dimension https://www.forcedimension.com/software/sdk#:~:text=The%20Force%20Dimension%20SDK%20is,Haptic%20SDK%20and%20Robotic%20SDK. 
 
 You will find documentation about available functions from 
+
 file:///home/rehassist/sdk-3.11.1/doc/dhd/index.html
+
 and
+
 file:///home/rehassist/sdk-3.11.1/doc/drd/index.html
 
 In the bin folder of the official library run
