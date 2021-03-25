@@ -7,7 +7,7 @@ The following package offers a ROS interface with the haptic device omega 7 from
 https://www.forcedimension.com/software/sdk#:~:text=The%20Force%20Dimension%20SDK%20is,Haptic%20SDK%20and%20Robotic%20SDK. 
 ```
 
-You will find documentation about available functions from 
+You will find documentation about available functions at 
 
 ```
 file:///home/rehassist/sdk-3.11.1/doc/dhd/index.html
@@ -20,14 +20,14 @@ In the bin folder of the official library run
 sudo ./autoinit
 ```
 
-This command will initialize your device and allow you to activate the force mode with dhdEnableForce(DHD_ON);
+This will initialize your device and allow you to activate the force mode with dhdEnableForce(DHD_ON);
 
 # Cloning the package into your catkin_workspace
 
 Clone the following package in the src folder of your catkin workspace
 
 ```
-git clone git@github.com:tbaltus/omega_ros.git
+git clone https://github.com/tbaltus/omega_ros
 ```
 
 # Running or launching
