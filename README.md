@@ -7,7 +7,7 @@ The following package offers a ROS interface with the haptic device omega 7 from
 https://www.forcedimension.com/software/sdk#:~:text=The%20Force%20Dimension%20SDK%20is,Haptic%20SDK%20and%20Robotic%20SDK. 
 ```
 
-You will find documentation about available functions at 
+You will find documentation about available functions with 
 
 ```
 google-chrome PATH_TO_SDK/sdk-3.11.1/doc/dhd/index.html
