@@ -10,8 +10,8 @@ https://www.forcedimension.com/software/sdk#:~:text=The%20Force%20Dimension%20SD
 You will find documentation about available functions at 
 
 ```
-google-traduction PATH_TO_SDK/sdk-3.11.1/doc/dhd/index.html
-google-traduction PATH_TO_SDK/sdk-3.11.1/doc/drd/index.html
+google-chrome PATH_TO_SDK/sdk-3.11.1/doc/dhd/index.html
+google-chrome PATH_TO_SDK/sdk-3.11.1/doc/drd/index.html
 ```
 
 In the bin folder of the official library run
