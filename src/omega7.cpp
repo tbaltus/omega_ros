@@ -5,6 +5,7 @@
 #include "std_msgs/Int8MultiArray.h"
 #include <geometry_msgs/Vector3Stamped.h>
 #include <geometry_msgs/Vector3.h>
+#include "geometry_msgs/WrenchStamped.h"
 
 #include <sstream>
 
@@ -12,13 +13,18 @@ void displayDeviceStatus(char ID);
 void displayCartesianPosition(double *cartesian_position);
 void displayCartesianVelocity(double *cartesian_velocity);
 void deviceForceCallback(const geometry_msgs::Vector3::ConstPtr &msg);
+void fExtFrankaCallback(const geometry_msgs::WrenchStamped& msg);
+
+
+geometry_msgs::Vector3 force_to_publish_to_omega_from_franka;
+geometry_msgs::Vector3 force_to_publish_to_omega_from_viscosity;
+geometry_msgs::Vector3 force_to_publish_to_omega;
 
 int main(int argc, char **argv)
 {
   // Declare variables
   double device_cartesian_position[3];
   double device_cartesian_velocity[3];
-  double  jacobian[3][3];
   
   // Init node
   ros::init(argc, argv, "omega7");
@@ -31,9 +37,16 @@ int main(int argc, char **argv)
   ros::Publisher cartesian_velocity_device_pub;
   cartesian_velocity_device_pub = n.advertise<geometry_msgs::Vector3Stamped>("/EE_cartesian_velocity",1);
 
+  //ros::Publisher cartesian_force_device_pub;
+  ros::Publisher cartesian_force_device_pub;
+  cartesian_force_device_pub = n.advertise<geometry_msgs::Vector3>("/EE_cartesian_force",1);
+
   // Declare subscribers
   ros::Subscriber cartesian_force_device_sub;
   cartesian_force_device_sub = n.subscribe<geometry_msgs::Vector3>("/EE_cartesian_force",1, deviceForceCallback);
+
+  ros::Subscriber force_from_franka_sub;
+  force_from_franka_sub = n.subscribe("/franka_state_controller/F_ext", 1, fExtFrankaCallback);
 
   // open a connection to the device
   if (dhdOpen() < 0)
@@ -47,6 +60,7 @@ int main(int argc, char **argv)
   // Disable brakes and set device in force mode
   dhdSetBrakes(DHD_OFF);
   dhdEnableForce(DHD_ON);
+  dhdSetGravityCompensation(DHD_ON);
 
   // Display Status
   displayDeviceStatus(dhdGetDeviceID());
@@ -62,14 +76,23 @@ int main(int argc, char **argv)
     dhdGetPosition(&device_cartesian_position[0], &device_cartesian_position[1], &device_cartesian_position[2], dhdGetDeviceID());
     dhdGetLinearVelocity(&device_cartesian_velocity[0], &device_cartesian_velocity[1], &device_cartesian_velocity[2], dhdGetDeviceID());
 
-    //Get jacobian
-    dhdGetDeltaJacobian(jacobian);
-    ROS_INFO("%f", jacobian[0][0]);
-
     //Display cartesian positions and cartesian velocities
     //displayCartesianPosition(&device_cartesian_position[0]);
     //displayCartesianVelocity(&device_cartesian_velocity[0]);
     
+    //Compute viscosity 
+    force_to_publish_to_omega_from_viscosity.x = - 5 * device_cartesian_velocity[0];
+    force_to_publish_to_omega_from_viscosity.y = - 5 * device_cartesian_velocity[1];
+    force_to_publish_to_omega_from_viscosity.z = - 5 * device_cartesian_velocity[2];
+
+    //Compute all forces
+    force_to_publish_to_omega.x = force_to_publish_to_omega_from_viscosity.x + force_to_publish_to_omega_from_franka.x; 
+    force_to_publish_to_omega.y = force_to_publish_to_omega_from_viscosity.y + force_to_publish_to_omega_from_franka.y;
+    force_to_publish_to_omega.z = force_to_publish_to_omega_from_viscosity.z + force_to_publish_to_omega_from_franka.z;
+
+    //Publish all forces
+    cartesian_force_device_pub.publish(force_to_publish_to_omega);
+
     //Publishing device cartesian positions and cartesian velocities
     geometry_msgs::Vector3Stamped cart_pos_dev;
     geometry_msgs::Vector3Stamped cart_vel_dev;
@@ -135,4 +158,11 @@ void displayCartesianVelocity(double *cartesian_velocity)
 void deviceForceCallback(const geometry_msgs::Vector3::ConstPtr &msg)
 {
   dhdSetForce(msg->x, msg->y, msg->z);
+}
+
+void fExtFrankaCallback(const geometry_msgs::WrenchStamped& msg)
+{
+  force_to_publish_to_omega_from_franka.x = -msg.wrench.force.x/10;
+  force_to_publish_to_omega_from_franka.y = msg.wrench.force.y/10;
+  force_to_publish_to_omega_from_franka.z = msg.wrench.force.z/10;
 }
